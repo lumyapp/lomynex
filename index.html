@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="LOMYNEX is a personal learning platform powered by LOMY, built for Ask LOMY, LOMY Teacher sessions, homework guidance, parent visibility, and personalized academic progress."
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="shortcut icon" href="./favicon.svg" />
+    <title>LOMYNEX | Coming Soon</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #111111;
+        --soft-ink: #2b2826;
+        --muted: #66615d;
+        --paper: #fcfaf8;
+        --surface: #ffffff;
+        --warm: #fff3ed;
+        --line: #ebe4df;
+        --coral: #ff7a45;
+        --coral-strong: #f26a36;
+        --mint: #2dc9a0;
+        --shadow: 0 24px 70px rgba(35, 24, 18, 0.08);
+        --shadow-soft: 0 14px 36px rgba(35, 24, 18, 0.06);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 16%, rgba(255, 122, 69, 0.13), transparent 28%),
+          radial-gradient(circle at 86% 82%, rgba(255, 243, 237, 0.9), transparent 28%),
+          var(--paper);
+        font-family:
+          "DM Sans", Inter, ui-sans-serif, system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .page {
+        width: min(100%, 1240px);
+        margin: 0 auto;
+        padding: 28px 22px 34px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        height: 52px;
+      }
+
+      .logo img {
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.74);
+        padding: 10px 15px;
+        box-shadow: var(--shadow-soft);
+        color: var(--coral-strong);
+        font-weight: 900;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.78fr);
+        align-items: center;
+        gap: clamp(34px, 6vw, 76px);
+        min-height: calc(100vh - 120px);
+        padding: clamp(42px, 7vw, 86px) 0 34px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        background: var(--coral);
+        padding: 10px 16px;
+        color: white;
+        font-size: 14px;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        box-shadow: 0 16px 32px rgba(255, 122, 69, 0.24);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        color: var(--ink);
+        font-family:
+          Nunito, "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 830px;
+        margin-top: 24px;
+        font-size: clamp(48px, 7vw, 86px);
+        line-height: 0.98;
+        font-weight: 950;
+      }
+
+      .intro {
+        max-width: 700px;
+        margin: 26px 0 0;
+        color: var(--muted);
+        font-size: clamp(18px, 2vw, 22px);
+        line-height: 1.65;
+      }
+
+      .cta-row {
+        display: block;
+        margin-top: 34px;
+      }
+
+      .access-form {
+        display: grid;
+        max-width: 680px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        gap: 12px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 10px;
+        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(12px);
+      }
+
+      .access-form input {
+        min-width: 0;
+        min-height: 54px;
+        border: 1px solid transparent;
+        border-radius: 20px;
+        background: var(--paper);
+        padding: 0 16px;
+        color: var(--ink);
+        outline: none;
+      }
+
+      .access-form input::placeholder {
+        color: rgba(102, 97, 93, 0.78);
+      }
+
+      .access-form input:focus {
+        border-color: rgba(255, 122, 69, 0.35);
+        background: white;
+        box-shadow: 0 0 0 4px rgba(255, 122, 69, 0.1);
+      }
+
+      .form-note {
+        min-height: 22px;
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .form-note.success {
+        color: #168768;
+      }
+
+      .form-note.error {
+        color: var(--coral-strong);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 56px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--coral);
+        padding: 0 24px;
+        color: white;
+        font-weight: 900;
+        box-shadow: 0 18px 34px rgba(255, 122, 69, 0.25);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          background 180ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        background: var(--coral-strong);
+        box-shadow: 0 24px 46px rgba(255, 122, 69, 0.3);
+      }
+
+      .button:disabled {
+        cursor: wait;
+        opacity: 0.74;
+        transform: none;
+      }
+
+      .trust-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 22px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .trust-row span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--mint);
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.84);
+        padding: 18px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+
+      .lesson-card {
+        overflow: hidden;
+        border-radius: 28px;
+        background: linear-gradient(145deg, var(--warm), #ffffff 62%);
+        padding: 24px;
+      }
+
+      .teacher-window {
+        position: relative;
+        display: grid;
+        min-height: 270px;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid rgba(255, 122, 69, 0.18);
+        border-radius: 26px;
+        background:
+          radial-gradient(circle at 48% 42%, rgba(255, 122, 69, 0.12), transparent 34%),
+          white;
+      }
+
+      .teacher-window::before,
+      .teacher-window::after {
+        position: absolute;
+        content: "";
+        border-radius: 999px;
+        pointer-events: none;
+      }
+
+      .teacher-window::before {
+        width: 230px;
+        height: 230px;
+        border: 1px solid rgba(255, 122, 69, 0.2);
+        animation: signal-pulse 4.8s ease-in-out infinite;
+      }
+
+      .teacher-window::after {
+        width: 360px;
+        height: 360px;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(255, 122, 69, 0.13), transparent 34%),
+          conic-gradient(from 110deg, transparent, rgba(255, 122, 69, 0.14), transparent 42%);
+        filter: blur(8px);
+        opacity: 0.7;
+        animation: quiet-rotate 13s linear infinite;
+      }
+
+      .ai-graphic {
+        position: relative;
+        display: grid;
+        width: 230px;
+        height: 230px;
+        place-items: center;
+        isolation: isolate;
+      }
+
+      .ai-orbit {
+        position: absolute;
+        inset: 12px;
+        border: 1px solid rgba(255, 122, 69, 0.18);
+        border-radius: 999px;
+        animation: quiet-rotate 10s linear infinite;
+      }
+
+      .ai-orbit::before,
+      .ai-orbit::after {
+        position: absolute;
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: var(--coral);
+        box-shadow: 0 0 0 8px rgba(255, 122, 69, 0.12);
+      }
+
+      .ai-orbit::before {
+        top: 26px;
+        right: 22px;
+      }
+
+      .ai-orbit::after {
+        bottom: 32px;
+        left: 18px;
+        width: 9px;
+        height: 9px;
+        background: var(--mint);
+        box-shadow: 0 0 0 7px rgba(45, 201, 160, 0.12);
+      }
+
+      .ai-ring {
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        border: 1px solid rgba(255, 122, 69, 0.2);
+        border-radius: 40px;
+        transform: rotate(18deg);
+        animation: ring-breathe 5.6s ease-in-out infinite;
+      }
+
+      .teacher-mark {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        width: 96px;
+        height: 96px;
+        place-items: center;
+        border-radius: 28px;
+        background: var(--coral);
+        color: white;
+        font-size: 42px;
+        font-weight: 950;
+        box-shadow: 0 22px 44px rgba(255, 122, 69, 0.28);
+        animation: ai-float 4.2s ease-in-out infinite;
+      }
+
+      .teacher-mark::after {
+        position: absolute;
+        inset: -20px;
+        z-index: -1;
+        border-radius: 40px;
+        background: rgba(255, 122, 69, 0.18);
+        filter: blur(18px);
+        content: "";
+        animation: glow-breathe 4.2s ease-in-out infinite;
+      }
+
+      .lesson-copy {
+        margin-top: 22px;
+      }
+
+      .lesson-copy h2 {
+        font-size: 28px;
+        line-height: 1.15;
+      }
+
+      .lesson-copy p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .metric {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: white;
+        padding: 15px;
+        box-shadow: 0 10px 24px rgba(35, 24, 18, 0.045);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .section {
+        padding: 32px 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        margin-bottom: 22px;
+      }
+
+      .section-head h2 {
+        max-width: 680px;
+        font-size: clamp(32px, 4vw, 48px);
+        line-height: 1.05;
+      }
+
+      .section-head p {
+        max-width: 430px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .feature {
+        min-height: 230px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--surface);
+        padding: 24px;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .feature-icon {
+        display: grid;
+        width: 52px;
+        height: 52px;
+        place-items: center;
+        border-radius: 18px;
+        background: var(--warm);
+        color: var(--coral);
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .feature h3 {
+        margin-top: 18px;
+        font-size: 21px;
+        line-height: 1.2;
+      }
+
+      .feature p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .waitlist {
+        margin-top: 38px;
+      }
+
+      .waitlist-copy {
+        border: 1px solid var(--line);
+        border-radius: 32px;
+        padding: clamp(24px, 4vw, 34px);
+        background:
+          radial-gradient(circle at 90% 16%, rgba(255, 122, 69, 0.12), transparent 28%),
+          white;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .waitlist-copy h2 {
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1.08;
+      }
+
+      .waitlist-copy p {
+        max-width: 680px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-top: 1px solid var(--line);
+        margin-top: 46px;
+        padding-top: 24px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      footer a {
+        color: var(--soft-ink);
+        font-weight: 900;
+      }
+
+      .footer-links {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .social-links {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .social-link {
+        display: inline-grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        color: var(--soft-ink);
+        box-shadow: 0 10px 22px rgba(35, 24, 18, 0.045);
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease,
+          color 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .social-link:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 122, 69, 0.42);
+        color: var(--coral-strong);
+        box-shadow: 0 16px 28px rgba(255, 122, 69, 0.12);
+      }
+
+      .social-link svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+
+      .social-link.disabled {
+        cursor: not-allowed;
+        opacity: 0.42;
+      }
+
+      .social-link.disabled:hover {
+        transform: none;
+        border-color: var(--line);
+        color: var(--soft-ink);
+        box-shadow: 0 10px 22px rgba(35, 24, 18, 0.045);
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+
+        .features {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 18px 14px 26px;
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .logo {
+          height: 44px;
+          max-width: 250px;
+          overflow: hidden;
+        }
+
+        .nav-actions {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        h1 {
+          font-size: 44px;
+        }
+
+        .cta-row,
+        .trust-row {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .access-form {
+          grid-template-columns: 1fr;
+          border-radius: 26px;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .panel,
+        .lesson-card,
+        .waitlist-copy {
+          border-radius: 26px;
+        }
+
+        .metrics,
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        footer {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .footer-links {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @keyframes ai-float {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-6px) scale(1.02);
+        }
+      }
+
+      @keyframes glow-breathe {
+        0%,
+        100% {
+          opacity: 0.58;
+          transform: scale(0.94);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.08);
+        }
+      }
+
+      @keyframes signal-pulse {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: scale(0.82);
+        }
+        50% {
+          opacity: 0.72;
+          transform: scale(1.08);
+        }
+      }
+
+      @keyframes quiet-rotate {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes ring-breathe {
+        0%,
+        100% {
+          opacity: 0.36;
+          transform: rotate(18deg) scale(0.94);
+        }
+        50% {
+          opacity: 0.72;
+          transform: rotate(28deg) scale(1.08);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLCL2TZZTZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PLCL2TZZTZ');
+</script>
+  <body>
+    <main class="page">
+      <nav class="nav" aria-label="Page navigation">
+        <a class="logo" href="/" aria-label="LOMYNEX home">
+          <img src="./Lomynex-logo.png" alt="LOMYNEX" />
+        </a>
+        <div class="nav-actions">
+          <span class="pill">Coming soon</span>
+        </div>
+      </nav>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <span class="eyebrow">Personal AI learning powered by LOMY</span>
+          <h1 id="hero-title">Personalized learning that feels human.</h1>
+          <p class="intro">
+            LOMYNEX is being built for families and students who want more than
+            static lessons. Powered by LOMY, it brings Ask LOMY, LOMY Teacher,
+            homework guidance, curriculum-aware practice, and parent visibility
+            into one calm educational experience.
+          </p>
+          <div class="cta-row" aria-label="Request early access">
+            <form
+              class="access-form"
+              id="early-access-form"
+              data-script-url="https://script.google.com/macros/s/AKfycbzbRcStRYFqpTJGHzlKp9tmiRcY1opZbT5kOg5BrF9cZxCYczkGfRuegNGkQ1s1R-kXrw/exec"
+              action="https://script.google.com/macros/s/AKfycbzbRcStRYFqpTJGHzlKp9tmiRcY1opZbT5kOg5BrF9cZxCYczkGfRuegNGkQ1s1R-kXrw/exec"
+              method="post"
+              target="early-access-frame"
+            >
+              <input name="name" type="text" placeholder="Your name" autocomplete="name" aria-label="Your name" required />
+              <input name="email" type="email" placeholder="Email address" autocomplete="email" aria-label="Email address" required />
+              <input name="source" type="hidden" value="comingsoon" />
+              <input name="page" type="hidden" value="" />
+              <input name="submittedAt" type="hidden" value="" />
+              <button class="button" type="submit">Request early access</button>
+            </form>
+            <iframe name="early-access-frame" title="Early access submission" hidden></iframe>
+            <p class="form-note" id="early-access-status" role="status" aria-live="polite"></p>
+          </div>
+          <div class="trust-row" aria-label="Platform readiness">
+            <span><i class="dot"></i> Built for K-12 learning</span>
+            <span><i class="dot"></i> Multilingual learning support</span>
+            <span><i class="dot"></i> Parent-first visibility</span>
+          </div>
+        </div>
+
+        <aside class="panel" aria-label="LOMYNEX learning preview">
+          <div class="lesson-card">
+            <div class="teacher-window">
+              <div class="ai-graphic" aria-hidden="true">
+                <span class="ai-orbit"></span>
+                <span class="ai-ring"></span>
+                <div class="teacher-mark">L</div>
+              </div>
+            </div>
+            <div class="lesson-copy">
+              <h2>One persistent learning intelligence.</h2>
+              <p>
+                Lessons, Ask LOMY, homework explanations, LOMY Teacher sessions,
+                and progress insights are designed to connect through the same
+                intelligence layer, so support feels continuous instead of fragmented.
+              </p>
+            </div>
+            <div class="metrics" aria-label="Core experience pillars">
+              <div class="metric">
+                <strong>1-12</strong>
+                <span>Grade coverage</span>
+              </div>
+              <div class="metric">
+                <strong>4</strong>
+                <span>Core subjects</span>
+              </div>
+              <div class="metric">
+                <strong>LOMY</strong>
+                <span>Teacher guidance</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="platform" class="section" aria-labelledby="platform-title">
+        <div class="section-head">
+          <h2 id="platform-title">A learning system built around progress, not noise.</h2>
+          <p>
+            LOMYNEX focuses on the moments that matter: asking, understanding,
+            practice, confidence, homework support, and clear family insight.
+          </p>
+        </div>
+
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">01</div>
+            <h3>LOMY Teacher sessions</h3>
+            <p>
+              Students learn with a visible LOMY Teacher experience that explains,
+              adapts, and gives difficult topics a calmer teacher presence.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">02</div>
+            <h3>Ask LOMY</h3>
+            <p>
+              A study support space for homework, revision, concept questions,
+              voice, documents, and image-based academic help.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">03</div>
+            <h3>LOMY Homework Help</h3>
+            <p>
+              Students can upload worksheets, screenshots, and PDFs to receive
+              guided explanations first, followed by answers they can understand.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">04</div>
+            <h3>Parent insights</h3>
+            <p>
+              Families get calm visibility into learning activity, progress,
+              weak areas, consistency, and the support their child may need next.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="waitlist" aria-labelledby="waitlist-title">
+        <div class="waitlist-copy">
+          <h2 id="waitlist-title">Launching soon for families and learning partners.</h2>
+          <p>
+            We are preparing LOMYNEX as a premium educational platform for
+            personalized lessons, multilingual learning support, adaptive
+            curriculum coverage, and future school or partner deployments.
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        <span>© 2026 LOMYNEX. All rights reserved.</span>
+        <div class="footer-links">
+          <div class="social-links" aria-label="LOMYNEX social media">
+            <a class="social-link" href="https://www.linkedin.com/company/lomynex" target="_blank" rel="noopener noreferrer" aria-label="LOMYNEX on LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.42 8h4.16v15H.42V8Zm7.38 0h3.99v2.05h.06c.56-1.06 1.92-2.18 3.95-2.18 4.22 0 5 2.78 5 6.39V23h-4.16v-7.75c0-1.85-.03-4.23-2.58-4.23-2.58 0-2.98 2.02-2.98 4.1V23H7.8V8Z"/>
+              </svg>
+            </a>
+            <a class="social-link" href="https://www.tiktok.com/@lomynex" target="_blank" rel="noopener noreferrer" aria-label="LOMYNEX on TikTok">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16.6 1c.38 3.2 2.18 5.12 5.3 5.33v4.02c-1.8.17-3.39-.42-5.18-1.53v7.52c0 9.55-10.4 12.53-14.58 5.69-2.69-4.4-1.04-12.12 7.58-12.43v4.24c-.59.1-1.22.25-1.8.44-1.72.58-2.7 1.67-2.43 3.58.52 3.65 7.22 4.73 6.66-2.4V1h4.45Z"/>
+              </svg>
+            </a>
+            <a class="social-link" href="https://www.instagram.com/lomynex" target="_blank" rel="noopener noreferrer" aria-label="LOMYNEX on Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9Zm4.5 3.2A4.8 4.8 0 1 1 12 16.8a4.8 4.8 0 0 1 0-9.6Zm0 2A2.8 2.8 0 1 0 12 14.8a2.8 2.8 0 0 0 0-5.6Zm5.15-2.35a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/>
+              </svg>
+            </a>
+            <a class="social-link" href="https://www.youtube.com/channel/UCOxvEDv7gFoQdW5YxiDq3og" target="_blank" rel="noopener noreferrer" aria-label="LOMYNEX on YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M23.5 6.2a3 3 0 0 0-2.11-2.12C19.53 3.58 12 3.58 12 3.58s-7.53 0-9.39.5A3 3 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3 3 0 0 0 2.11 2.12c1.86.5 9.39.5 9.39.5s7.53 0 9.39-.5a3 3 0 0 0 2.11-2.12A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.57V8.43L15.86 12 9.6 15.57Z"/>
+              </svg>
+            </a>
+          </div>
+          <a href="mailto:hello@lomynex.com">Contact LOMYNEX</a>
+        </div>
+      </footer>
+    </main>
+    <script>
+      const earlyAccessForm = document.querySelector("#early-access-form");
+      const earlyAccessStatus = document.querySelector("#early-access-status");
+      const earlyAccessFrame = document.querySelector("iframe[name='early-access-frame']");
+      let earlyAccessSubmitting = false;
+
+      earlyAccessForm?.addEventListener("submit", (event) => {
+        const scriptUrl = earlyAccessForm.dataset.scriptUrl?.trim();
+        const submitButton = earlyAccessForm.querySelector("button[type='submit']");
+        const formData = new FormData(earlyAccessForm);
+        const name = String(formData.get("name") || "").trim();
+        const email = String(formData.get("email") || "").trim();
+
+        earlyAccessStatus.className = "form-note";
+
+        if (!name || !email) {
+          earlyAccessStatus.textContent = "Please add your name and email address.";
+          earlyAccessStatus.classList.add("error");
+          return;
+        }
+
+        if (!scriptUrl) {
+          event.preventDefault();
+          earlyAccessStatus.textContent =
+            "Early access collection is being connected. Please contact hello@lomynex.com.";
+          earlyAccessStatus.classList.add("error");
+          return;
+        }
+
+        earlyAccessForm.action = scriptUrl;
+        earlyAccessForm.querySelector("input[name='page']").value = window.location.href;
+        earlyAccessForm.querySelector("input[name='submittedAt']").value = new Date().toISOString();
+
+        earlyAccessSubmitting = true;
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+        earlyAccessStatus.textContent = "";
+      });
+
+      earlyAccessFrame?.addEventListener("load", () => {
+        if (!earlyAccessSubmitting) {
+          return;
+        }
+
+        const submitButton = earlyAccessForm.querySelector("button[type='submit']");
+        earlyAccessSubmitting = false;
+        earlyAccessForm.reset();
+        submitButton.disabled = false;
+        submitButton.textContent = "Request early access";
+        earlyAccessStatus.textContent =
+          "Thank you. Your early access request has been received.";
+        earlyAccessStatus.classList.add("success");
+      });
+    </script>
+  </body>
+</html>
